@@ -81,9 +81,9 @@ public class PersonalTaskManagerViolations {
         }
 
 
-        String taskId = UUID.randomUUID().toString(); // YAGNI: Có thể dùng số nguyên tăng dần đơn giản hơn.
+        String taskId = UUID.randomUUID().toString();
+        JSONObject newTask = createTaskObject(taskId, title, description, dueDate, priorityLevel);
 
-        JSONObject newTask = new JSONObject();
         newTask.put("id", taskId);
         newTask.put("title", title);
         newTask.put("description", description);
@@ -167,6 +167,19 @@ public class PersonalTaskManagerViolations {
         return false;
     }
     
-    
+    private JSONObject createTaskObject(String id, String title, String description,
+                                    LocalDate dueDate, String priority) {
+    JSONObject task = new JSONObject();
+    task.put("id", id);
+    task.put("title", title);
+    task.put("description", description);
+    task.put("due_date", dueDate.format(DATE_FORMATTER));
+    task.put("priority", priority);
+    task.put("status", "Chưa hoàn thành");
+    task.put("created_at", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+    task.put("last_updated_at", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+    return task;
+}
+
     
 }
